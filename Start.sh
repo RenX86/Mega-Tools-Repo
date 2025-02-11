@@ -10,9 +10,17 @@ while true; do
     echo -e "${GREEN}==================================${RESET}"
     echo "1. Run Gallery-dl (Image Downloader)"
     echo "2. Run Yt-dlp (Video Downloader)"
-    echo "3. Exit"
+    echo "3. Run PyGuardian-V1 (Encryption)"
+    echo "4. Run PyGuardian-V2 (Encryption)"
+    echo "5. Run PyGuardian-V2.1 (Encryption)"
+    echo "6. Run PyGuardian-V3 (Encryption)"
+    echo "7. Run Tree (File Tree)"
+    echo "8. Run FileOpsManager (File Operations Manager)"
+    echo "9. Run Image-Converter (Image Converter)"
+    echo "10. Run X-PDF-Script (PDF Utils)"
+    echo "11. Exit"
     echo -e "${GREEN}==================================${RESET}"
-    read -p "${GREEN}Enter your choice (1-3): ${RESET}" choice
+    read -p "${GREEN}Enter your choice (1-11): ${RESET}" choice
 
     case $choice in
         1)

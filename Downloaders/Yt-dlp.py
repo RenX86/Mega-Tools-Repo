@@ -8,7 +8,12 @@ def download_video(url):
     script_dir = get_script_dir()
     os.chdir(script_dir)
     try:
-        result = subprocess.run(["yt-dlp", url], check=True)
+        result = subprocess.run([
+            "yt-dlp",
+            "-f", 'bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]',
+            "--merge-output-format", "mp4",
+            url
+        ], check=True)
         if result.returncode == 0:
             print(f"Video downloaded successfully from {url}")
     except subprocess.CalledProcessError:
@@ -18,7 +23,12 @@ def download_from_file(file_path):
     script_dir = get_script_dir()
     os.chdir(script_dir)
     try:
-        result = subprocess.run(["yt-dlp", "-a", file_path], check=True)
+        result = subprocess.run([
+            "yt-dlp",
+            "-a", file_path,
+            "-f", 'bv*[ext=mp4]+ba[ext=m4a]/b[ext=mp4]',
+            "--merge-output-format", "mp4"
+        ], check=True)
         if result.returncode == 0:
             print(f"Videos successfully downloaded from {file_path}")
     except subprocess.CalledProcessError:

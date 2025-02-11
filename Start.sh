@@ -3,6 +3,9 @@
 GREEN="\e[32m"
 RESET="\e[0m"
 
+# Handle Ctrl+C (SIGINT) gracefully
+trap "echo -e '\n${GREEN}Exiting...${RESET}'; exit 0" SIGINT
+
 while true; do
     clear
     echo -e "${GREEN}==================================${RESET}"
@@ -22,71 +25,28 @@ while true; do
     echo -e "${GREEN}==================================${RESET}"
     read -p "${GREEN}Enter your choice (1-11): ${RESET}" choice
 
+    run_script() {
+        local script_path="$1"
+        if [ -f "$script_path" ]; then
+            python3 "$script_path"
+        else
+            echo -e "${GREEN}Error: $script_path not found!${RESET}"
+        fi
+        read -p "Press any key to continue..."
+    }
+
     case $choice in
-        1)
-            cd "$(dirname "$0")/Downloaders" 2>/dev/null
-            python Gallery-dl.py
-            read -p "Press any key to continue..."
-            ;;
-        2)
-            cd "$(dirname "$0")/Downloaders" 2>/dev/null
-            python Yt-dlp.py
-            read -p "Press any key to continue..."
-            ;;
-
-        3)
-            cd "$(dirname "$0")/Encryption" 2>/dev/null
-            python PyGuardian-V1.py
-            read -p "Press any key to continue..."
-            ;;
-        4)
-            cd "$(dirname "$0")/Encryption" 2>/dev/null
-            python PyGuardian-V2.py
-            read -p "Press any key to continue..."
-            ;;
-        
-        5)
-            cd "$(dirname "$0")/Encryption" 2>/dev/null
-            python PyGuardian-V2.1.py
-            read -p "Press any key to continue..."
-            ;;
-
-        6)
-            cd "$(dirname "$0")/Encryption" 2>/dev/null
-            python PyGuardian-V3.py
-            read -p "Press any key to continue..."
-            ;;
-
-        7)
-            cd "$(dirname "$0")/File-Tree" 2>/dev/null
-            python Tree.py
-            read -p "Press any key to continue..."
-            ;;
-
-        8)
-            cd "$(dirname "$0")/FileOpsManager" 2>/dev/null
-            python FileOpsManger.py
-            read -p "Press any key to continue..."
-            ;;
-
-        9)
-            cd "$(dirname "$0")/Image-Converter" 2>/dev/null
-            python Image-Converter.py
-            read -p "Press any key to continue..."
-            ;;
-
-        10)
-            cd "$(dirname "$0")/PDF-Utils" 2>/dev/null
-            python X-PDF-Script.py
-            read -p "Press any key to continue..."
-            ;;
-
-        11)
-            exit 0
-            ;;
-        *)
-            echo "${GREEN}Invalid choice. Please enter 1, 2, or 3.${RESET}"
-            read -p "Press any key to continue..."
-            ;;
+        1) run_script "$(dirname "$0")/Downloaders/Gallery-dl.py" ;;
+        2) run_script "$(dirname "$0")/Downloaders/Yt-dlp.py" ;;
+        3) run_script "$(dirname "$0")/Encryption/PyGuardian-V1.py" ;;
+        4) run_script "$(dirname "$0")/Encryption/PyGuardian-V2.py" ;;
+        5) run_script "$(dirname "$0")/Encryption/PyGuardian-V2.1.py" ;;
+        6) run_script "$(dirname "$0")/Encryption/PyGuardian-V3.py" ;;
+        7) run_script "$(dirname "$0")/File-Tree/Tree.py" ;;
+        8) run_script "$(dirname "$0")/FileOpsManager/FileOpsManager.py" ;;  # Fixed typo
+        9) run_script "$(dirname "$0")/Image-Converter/Image-Converter.py" ;;
+        10) run_script "$(dirname "$0")/PDF-Utils/X-PDF-Script.py" ;;
+        11) echo -e "${GREEN}Goodbye!${RESET}"; exit 0 ;;
+        *) echo -e "${GREEN}Invalid choice. Please enter a number between 1 and 11.${RESET}" ;;
     esac
 done

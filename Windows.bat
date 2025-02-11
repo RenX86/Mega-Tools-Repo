@@ -1,79 +1,95 @@
 @echo off
-setlocal enabledelayedexpansion
+color 0A
+:menu
+cls
+echo ==================================
+echo Python Scripts Downloader Menu
+echo ==================================
+echo "1. Run Gallery-dl (Image Downloader)"
+echo "2. Run Yt-dlp (Video Downloader)"
+echo "3. Run PyGuardian-V1 (Encryption)"
+echo "4. Run PyGuardian-V2 (Encryption)"
+echo "5. Run PyGuardian-V2.1 (Encryption)"
+echo "6. Run PyGuardian-V3 (Encryption)"
+echo "7. Run Tree (File Tree)"
+echo "8. Run FileOpsManager (File Operations Manager)"
+echo "9. Run Image-Converter (Image Converter)"
+echo "10. Run X-PDF-Script (PDF Utils)"
+echo "11. Exit"
+echo ==================================
+set /p choice=Enter your choice (1-11): 
 
-echo ==============================================
-echo           Available Tools Menu
-echo ==============================================
-
-where python >nul 2>nul
-if %errorlevel% neq 0 (
-    echo Python is not installed or not in the system PATH.
-    echo Please install Python and add it to your system PATH.
-    echo You can download Python at https://www.python.org/downloads/
+if "%choice%" == "1" (
+    cd /d "%~dp0Downloaders"
+    python Gallery-dl.py
     pause
+    goto :menu
+)
+
+if "%choice%" == "2" (
+    cd /d "%~dp0Downloaders"
+    python Yt-dlp.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "3" (
+    cd /d "%~dp0Encryption"
+    python PyGuardian-V1.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "4" (
+    cd /d "%~dp0Encryption"
+    python PyGuardian-V2.py
+    pause
+    goto :menu
+)
+if "%choice%" == "5" (
+    cd /d "%~dp0Encryption"
+    python PyGuardian-V2.1.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "6" (
+    cd /d "%~dp0Encryption"
+    python PyGuardian-V3.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "7" (
+    cd /d "%~dp0File-Tree"
+    python Tree.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "8" (
+    cd /d "%~dp0FileOpsManager"
+    python Image-Converter.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "9" (
+    cd /d "%~dp0Image-Converter"
+    python Image-Converter.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "10" (
+    cd /d "%~dp0PDF-Utils"
+    python X-PDF-Script.py
+    pause
+    goto :menu
+)
+
+if "%choice%" == "11" (
     exit /b
 )
 
-:: Change to the script's directory
-cd /d "%~dp0"
-
-:: Virtual environment setup
-set VENV_DIR=.venv
-
-:: Check if virtual environment exists
-if not exist "%VENV_DIR%" (
-    echo Creating virtual environment...
-    python -m venv "%VENV_DIR%"
-    echo Virtual environment created.
-)
-
-:: Activate virtual environment
-call "%VENV_DIR%\Scripts\activate.bat"
-
-:: Install dependencies if requirements.txt exists
-if exist "requirements.txt" (
-    echo Installing dependencies wait it takes time...
-    python -m pip install --no-cache-dir --no-input --disable-pip-version-check -r requirements.txt > install.log 2>&1
-)
-
-:: Get list of Python scripts (excluding venv)
-set count=0
-for /r %%f in (*.py) do (
-    echo %%f | findstr /V /C:"%VENV_DIR%" >nul && (
-        set /a count+=1
-        set "script!count!=%%~nxf"
-        set "script_path!count!=%%~dpf"
-        echo !count!. %%~nxf
-    )
-)
-
-:: Check if scripts exist
-if %count%==0 (
-    echo No Python scripts found!
-    call "%VENV_DIR%\Scripts\deactivate.bat"
-    pause
-    exit /b
-)
-
-:: Ask user to choose a script
-set /p choice=Enter number: 
-if not defined script%choice% (
-    echo Invalid choice!
-    call "%VENV_DIR%\Scripts\deactivate.bat"
-    pause
-    exit /b
-)
-
-:: Get selected script and its path
-set "selected=!script%choice%!"
-set "selected_path=!script_path%choice%!"
-
-:: Run the script in its corresponding folder
-echo Running: %selected% in %selected_path%
-cd /d "%selected_path%"
-python "%selected%"
-
-:: Deactivate virtual environment
-call "%~dp0%VENV_DIR%\Scripts\deactivate.bat"
-
-pause
+goto :menu

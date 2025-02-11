@@ -25,7 +25,55 @@ while true; do
             python Yt-dlp.py
             read -p "Press any key to continue..."
             ;;
+
         3)
+            cd "$(dirname "$0")/Encryption" 2>/dev/null
+            python PyGuardian-V1.py
+            read -p "Press any key to continue..."
+            ;;
+        4)
+            cd "$(dirname "$0")/Encryption" 2>/dev/null
+            python PyGuardian-V2.py
+            read -p "Press any key to continue..."
+            ;;
+        
+        5)
+            cd "$(dirname "$0")/Encryption" 2>/dev/null
+            python PyGuardian-V2.1.py
+            read -p "Press any key to continue..."
+            ;;
+
+        6)
+            cd "$(dirname "$0")/Encryption" 2>/dev/null
+            python PyGuardian-V3.py
+            read -p "Press any key to continue..."
+            ;;
+
+        7)
+            cd "$(dirname "$0")/File-Tree" 2>/dev/null
+            python Tree.py
+            read -p "Press any key to continue..."
+            ;;
+
+        8)
+            cd "$(dirname "$0")/FileOpsManager" 2>/dev/null
+            python FileOpsManger.py
+            read -p "Press any key to continue..."
+            ;;
+
+        9)
+            cd "$(dirname "$0")/Image-Converter" 2>/dev/null
+            python Image-Converter.py
+            read -p "Press any key to continue..."
+            ;;
+
+        10)
+            cd "$(dirname "$0")/PDF-Utils" 2>/dev/null
+            python X-PDF-Script.py
+            read -p "Press any key to continue..."
+            ;;
+
+        11)
             exit 0
             ;;
         *)

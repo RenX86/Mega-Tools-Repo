@@ -1,5 +1,24 @@
 @echo off
 color 0A
+
+:: Handle virtual environment
+set VENV_DIR=.venv
+
+if not exist %VENV_DIR% (
+    echo Creating virtual environment...
+    python -m venv %VENV_DIR%
+    echo Virtual environment created.
+)
+
+:: Activate virtual environment
+call %VENV_DIR%\Scripts\activate.bat
+
+:: Install dependencies if requirements.txt exists
+if exist requirements.txt (
+    echo Installing dependencies...
+    python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
+)
+
 :menu
 cls
 echo ==================================

@@ -40,8 +40,9 @@ while true; do
     echo "9. Run Image-Converter (Image Converter)"
     echo "10. Run X-PDF-Script (PDF Utils)"
     echo "11. Exit"
-    echo -e "${GREEN}==================================${RESET}"
-    read -p "${GREEN}Enter your choice (1-11): ${RESET}" choice
+    echo -e "${GREEN}========================${RESET}"
+    echo -ne "${GREEN}Enter your choice (1-11): ${RESET}"
+    read choice
 
     run_script() {
         local script_path="$1"

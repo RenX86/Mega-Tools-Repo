@@ -1,10 +1,11 @@
 #!/bin/bash
 
 GREEN="\e[32m"
+RED="\e[31m"
 RESET="\e[0m"
 
 # Handle Ctrl+C (SIGINT) gracefully
-trap "echo -e '\n${GREEN}Exiting...${RESET}'; exit 0" SIGINT
+trap "echo -e '\n${GREEN}Goodbye!${RESET}'; exit 0" SIGINT
 
 VENV_DIR=".venv"
 
@@ -16,12 +17,18 @@ if [ ! -d "$VENV_DIR" ]; then
 fi
 
 # Activate virtual environment
-source "$VENV_DIR/bin/activate"
+if [ -n "$ZSH_VERSION" ]; then
+    source "$VENV_DIR/bin/activate"
+elif [ -n "$BASH_VERSION" ]; then
+    source "$VENV_DIR/bin/activate"
+else
+    echo -e "${RED}Unsupported shell. Activate the virtual environment manually.${RESET}"
+fi
 
 # Install dependencies if requirements.txt exists
 if [ -f "requirements.txt" ]; then
     echo "Installing dependencies..."
-    python -m pip install --no-cache-dir --no-input --disable-pip-version-check -r requirements.txt
+    python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
 fi
 
 while true; do

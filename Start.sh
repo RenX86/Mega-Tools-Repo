@@ -6,10 +6,28 @@ RESET="\e[0m"
 # Handle Ctrl+C (SIGINT) gracefully
 trap "echo -e '\n${GREEN}Exiting...${RESET}'; exit 0" SIGINT
 
+VENV_DIR=".venv"
+
+# Create virtual environment if it doesn't exist
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating virtual environment..."
+    python3 -m venv "$VENV_DIR"
+    echo "Virtual environment created."
+fi
+
+# Activate virtual environment
+source "$VENV_DIR/bin/activate"
+
+# Install dependencies if requirements.txt exists
+if [ -f "requirements.txt" ]; then
+    echo "Installing dependencies..."
+    python -m pip install --no-cache-dir --no-input --disable-pip-version-check -r requirements.txt
+fi
+
 while true; do
     clear
     echo -e "${GREEN}==================================${RESET}"
-    echo -e "${GREEN}Python Scripts Downloader Menu${RESET}"
+    echo -e "${GREEN}Python Scripts Menu${RESET}"
     echo -e "${GREEN}==================================${RESET}"
     echo "1. Run Gallery-dl (Image Downloader)"
     echo "2. Run Yt-dlp (Video Downloader)"
